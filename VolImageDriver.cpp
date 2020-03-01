@@ -1,5 +1,5 @@
 //Mbaliyethemba Shangase
-//18 March 2018
+//2 March 2020
 //VolImage class for Assignment 2
 
 #include <vector>
