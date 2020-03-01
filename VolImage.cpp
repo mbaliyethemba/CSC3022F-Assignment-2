@@ -1,1 +1,77 @@
+//Mbaliyethemba Shangase
+//2 March 2019
+//VolImage class
 
+#include <vector>
+#include <string>
+#include <cstring>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <ios>
+#include <cmath>
+#include "VolImage.h"
+#include <math.h>
+
+using namespace std;
+
+int width, height, num;
+vector<unsigned char**>slices;
+
+SHNMBA004::VolImage::VolImage(){
+	this->width = 0;
+	this->height = 0;
+	}
+
+SHNMBA004::VolImage::~VolImage(){
+	for(unsigned int i = 0; i < slices.size(); i++){
+		for(int j = 0; j < height; j++){
+			delete[] slices[i][j];
+		}
+		delete slices[i];
+	}
+}
+
+//populate the objecr with image stack
+bool SHNMBA004::VolImage::readImages(string baseName){
+	ifstream infile;
+	infile.open(baseName+".dat");
+	if(infile.is_open()){
+		string width, height, nums, line;
+		getline(infile, line);
+		istringstream ss(line);
+		getline(ss,width,' ');
+		getline(ss,height,' ');
+		getline(ss,nums,' ');
+		ss.str(std::string());
+		this->width = stoi(width);
+		this->height = stoi(height);
+		this->num = stoi(nums);
+		this->slices.reserve(num);
+		infile.close();
+		int i = 0;
+		while(i < num){
+			infile.open(baseName + to_string(i) + ".raw",ios::binary);
+			infile>>noskipws;
+			usigned char ** rows = new unsigned char * [this->height];
+			unsigned char c;
+			int w = 0;
+			while(w < this-> height){
+				unsigned char * linechar = new unsigned char[this->width];
+				int r = 0;
+				while(r < this->width){
+					infile >> c;
+					linechar[r] = c;
+					r++;
+				}
+				rows[w] = linechar;
+				w++;
+			}
+			infile.close();
+			this->slices.push_back(rows);
+			i++;
+		}
+		return true;
+	}
+	return false;
+}
