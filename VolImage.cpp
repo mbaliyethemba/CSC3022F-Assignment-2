@@ -120,3 +120,7 @@ int SHNMBA004::VolImage::volImageSize(void){
 	}
 	return 0;
 }
+
+int SHNMBA004::VolImage::volSize(void){
+	return this->num;
+}
