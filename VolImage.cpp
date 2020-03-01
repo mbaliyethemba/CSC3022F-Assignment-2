@@ -75,3 +75,22 @@ bool SHNMBA004::VolImage::readImages(string baseName){
 	}
 	return false;
 }
+
+// compute difference map and write out;
+void SHNMBA004::VolImage::diffmap(int sliceI, int sliceJ, std::string output_prefix){
+	ofstream outfile;
+	outfile.open(output_prefix + ".raw");
+	if(this->width != 0 && this->height != 0){
+		int t = 0;
+		while(t < height){
+			int y = 0;
+			while(y < width){
+				outfile << (unsigned char)(fabs((float)slices[sliceI][t][y] - (float)slices[sliceJ][t][y])/2);
+				y++;
+			}
+			t++;
+		}
+	}
+	outfile.close();
+}
+
