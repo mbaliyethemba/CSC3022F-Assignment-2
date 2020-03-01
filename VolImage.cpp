@@ -113,3 +113,10 @@ void SHNMBA004::VolImage::extract(int sliceId, std::string output_prefix){
 	}
 	outfile.close();
 }
+
+int SHNMBA004::VolImage::volImageSize(void){
+	if((this->width > 0) and (this->height > 0)){
+		return (slices.size()*(this->height)*(this->width)) + (sizeof(int*)*slices.size());
+	}
+	return 0;
+}
