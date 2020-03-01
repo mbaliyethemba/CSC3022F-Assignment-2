@@ -124,3 +124,26 @@ int SHNMBA004::VolImage::volImageSize(void){
 int SHNMBA004::VolImage::volSize(void){
 	return this->num;
 }
+
+void SHNMBA004::VolImage::extractRow(int rowId, std::string output_prefix){
+	string header = output_prefix + ".data";
+	ofstream head(header.c_str(), ios::out);
+		if(head.is_open()){
+			head<< width<< " "<< height<< " "<< 1<< endl;
+			cout<< "Created header file "<<header<<endl;
+			head.close();
+		}else{
+			cout<<"Unable to open file"<<header<<endl;
+		}
+
+	string outName = output_prefix + ".raw";
+	ofstream out(outName.c_str(), ios::binary);
+	if(out.is_open()){
+   
+    for(unsigned int i=0; i< slices.size(); i++){
+        char* byte = (char*)slices[i][rowId];
+        out.write(byte,width);
+      }
+      out.close();
+   }
+}
