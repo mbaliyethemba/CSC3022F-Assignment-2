@@ -11,6 +11,7 @@
 #include <fstream>
 
 namespace SHNMBA004{
+	class VolImage{
 	//private members
 	private:
 		//width and height of image stack
