@@ -94,3 +94,22 @@ void SHNMBA004::VolImage::diffmap(int sliceI, int sliceJ, std::string output_pre
 	outfile.close();
 }
 
+//extract slice sliceId and write to output
+void SHNMBA004::VolImage::extract(int sliceId, std::string output_prefix){
+	ofstream outfile;
+	outfile.open(output_prefix + ".dat");
+	string s = to_string(this->width) + " " + to_string(this->height) + " 1";
+	outfile << s << endl;
+	outfile.close();
+	outfile.open(output_prefix + ".raw", ios::binary);
+	int i = 0;
+	while(i < this->height){
+		int p = 0;
+		while(p < this->width){
+			outfile << this->slices[sliceId][i][p];
+			p++;
+		}
+		i++;
+	}
+	outfile.close();
+}
