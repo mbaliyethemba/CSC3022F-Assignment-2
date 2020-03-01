@@ -53,7 +53,7 @@ bool SHNMBA004::VolImage::readImages(string baseName){
 		while(i < num){
 			infile.open(baseName + to_string(i) + ".raw",ios::binary);
 			infile>>noskipws;
-			usigned char ** rows = new unsigned char * [this->height];
+			unsigned char ** rows = new unsigned char * [this->height];
 			unsigned char c;
 			int w = 0;
 			while(w < this-> height){
